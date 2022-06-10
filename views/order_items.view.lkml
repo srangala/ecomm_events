@@ -18,16 +18,26 @@ view: order_items {
 
   dimension_group: created {
     type: time
+    view_label: "_PoP"
     timeframes: [
       raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
+        time,
+        hour_of_day,
+        date,
+        day_of_week,
+        day_of_week_index,
+        day_of_month,
+        day_of_year,
+        week,
+        week_of_year,
+        month,
+        month_name,
+        month_num,
+        quarter,
+        year
     ]
     sql: ${TABLE}.created_at ;;
+    convert_tz: no
   }
 
   dimension_group: delivered {
@@ -83,8 +93,12 @@ view: order_items {
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
   measure: total_sale_price {
+    label: "Total Sales"
+    view_label: "_PoP"
     type: sum
     sql: ${sale_price} ;;
+    value_format_name: usd
+    drill_fields: [created_date]
   }
 
   measure: average_sale_price {
@@ -118,8 +132,17 @@ view: order_items {
   }
 
   measure: count {
+    label: "Count of order_items"
     type: count
-    drill_fields: [detail*]
+    hidden: yes
+    #drill_fields: [detail*]
+  }
+
+  measure: count_orders {
+    label: "Count of orders"
+    type: count_distinct
+    sql: ${order_id} ;;
+    hidden: yes
   }
 
   # ----- Sets of fields for drilling ------
