@@ -1,9 +1,9 @@
 ###  Period over Period Method 2: Allow users to choose periods with parameters
 
-include: "order_items.view.lkml"
+include: "pop_method1_order_items.view.lkml"
 
 view: pop_method2_order_items {
-extends: [order_items]
+extends: [pop_method1_order_items]
 
   parameter: choose_breakdown {
     label: "Choose Grouping (Rows)"
